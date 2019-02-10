@@ -33,6 +33,7 @@ import android.support.v7.preference.Preference.OnPreferenceChangeListener;
 import android.provider.Settings;
 
 import com.dot.dotextras.preference.CustomSeekBarPreference;
+import com.dot.dotextras.preference.SystemSettingSwitchPreference;
 
 import com.android.settings.SettingsPreferenceFragment;
 import com.android.internal.logging.nano.MetricsProto;
@@ -46,7 +47,8 @@ public class NavigationBarSettings extends SettingsPreferenceFragment implements
     private static final String NAVBAR_VISIBILITY = "navbar_visibility";
     private static final String KEY_NAVBAR_MODE = "navbar_mode";
     private static final String KEY_DEFAULT_NAVBAR_SETTINGS = "default_settings";
-    private static final String KEY_FLING_NAVBAR_SETTINGS = "fling_settings";
+    private static final String KEY_ONEHAND_UI_TOGGLE = "one_hand_mode_enabled";
+	private static final String KEY_FLING_NAVBAR_SETTINGS = "fling_settings";
     private static final String KEY_CATEGORY_NAVIGATION_INTERFACE = "category_navbar_interface";
     private static final String KEY_CATEGORY_NAVIGATION_GENERAL = "category_navbar_general";
     private static final String KEY_NAVIGATION_BAR_LEFT = "navigation_bar_left";
@@ -63,7 +65,8 @@ public class NavigationBarSettings extends SettingsPreferenceFragment implements
     private PreferenceCategory mNavGeneral;
     private PreferenceScreen mSmartbarSettings;
     private Preference mDefaultSettings;
-    private CustomSeekBarPreference mBarHeightPort;
+    private SystemSettingSwitchPreference mOneHandMode;
+	private CustomSeekBarPreference mBarHeightPort;
     private CustomSeekBarPreference mBarHeightLand;
     private CustomSeekBarPreference mBarWidth;
     private PreferenceScreen mPulseSettings;
@@ -78,7 +81,8 @@ public class NavigationBarSettings extends SettingsPreferenceFragment implements
         mNavbarVisibility = (SwitchPreference) findPreference(NAVBAR_VISIBILITY);
         mNavbarMode = (ListPreference) findPreference(KEY_NAVBAR_MODE);
         mDefaultSettings = (Preference) findPreference(KEY_DEFAULT_NAVBAR_SETTINGS);
-        mFlingSettings = (PreferenceScreen) findPreference(KEY_FLING_NAVBAR_SETTINGS);
+        mOneHandMode = (SystemSettingSwitchPreference) findPreference(KEY_ONEHAND_UI_TOGGLE);
+		mFlingSettings = (PreferenceScreen) findPreference(KEY_FLING_NAVBAR_SETTINGS);
         mSmartbarSettings = (PreferenceScreen) findPreference(KEY_SMARTBAR_SETTINGS);
         mPulseSettings = (PreferenceScreen) findPreference(KEY_PULSE_SETTINGS);
 
@@ -124,7 +128,9 @@ public class NavigationBarSettings extends SettingsPreferenceFragment implements
             case 0:
                 mDefaultSettings.setEnabled(true);
                 mDefaultSettings.setSelectable(true);
-                mSmartbarSettings.setEnabled(false);
+                mOneHandMode.setEnabled(true);
+                mOneHandMode.setSelectable(true);
+				mSmartbarSettings.setEnabled(false);
                 mSmartbarSettings.setSelectable(false);
                 mFlingSettings.setEnabled(false);
                 mFlingSettings.setSelectable(false);
@@ -132,7 +138,9 @@ public class NavigationBarSettings extends SettingsPreferenceFragment implements
             case 1:
                 mDefaultSettings.setEnabled(false);
                 mDefaultSettings.setSelectable(false);
-                mSmartbarSettings.setEnabled(true);
+                mOneHandMode.setEnabled(false);
+                mOneHandMode.setSelectable(false);
+				mSmartbarSettings.setEnabled(true);
                 mSmartbarSettings.setSelectable(true);
                 mFlingSettings.setEnabled(false);
                 mFlingSettings.setSelectable(false);
@@ -140,7 +148,9 @@ public class NavigationBarSettings extends SettingsPreferenceFragment implements
             case 2:
                 mDefaultSettings.setEnabled(false);
                 mDefaultSettings.setSelectable(false);
-                mSmartbarSettings.setEnabled(false);
+                mOneHandMode.setEnabled(false);
+                mOneHandMode.setSelectable(false);
+				mSmartbarSettings.setEnabled(false);
                 mSmartbarSettings.setSelectable(false);
                 mFlingSettings.setEnabled(true);
                 mFlingSettings.setSelectable(true);
